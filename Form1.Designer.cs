@@ -36,8 +36,10 @@
             this.redSButton = new System.Windows.Forms.RadioButton();
             this.redOButton = new System.Windows.Forms.RadioButton();
             this.bluePlayer = new System.Windows.Forms.GroupBox();
+            this.chkBlueHard = new System.Windows.Forms.CheckBox();
             this.radioButton1 = new System.Windows.Forms.RadioButton();
             this.redPlayer = new System.Windows.Forms.GroupBox();
+            this.chkRedHard = new System.Windows.Forms.CheckBox();
             this.radioButton2 = new System.Windows.Forms.RadioButton();
             this.simpleGameLabel = new System.Windows.Forms.Label();
             this.generalGameLabel = new System.Windows.Forms.Label();
@@ -54,8 +56,7 @@
             this.lblRedScore = new System.Windows.Forms.Label();
             this.chkRecord = new System.Windows.Forms.CheckBox();
             this.btnReplay = new System.Windows.Forms.Button();
-            this.chkBlueHard = new System.Windows.Forms.CheckBox();
-            this.chkRedHard = new System.Windows.Forms.CheckBox();
+            this.btnTheme = new System.Windows.Forms.Button();
             this.bluePlayer.SuspendLayout();
             this.redPlayer.SuspendLayout();
             this.groupBox1.SuspendLayout();
@@ -167,6 +168,17 @@
             this.bluePlayer.TabIndex = 7;
             this.bluePlayer.TabStop = false;
             // 
+            // chkBlueHard
+            // 
+            this.chkBlueHard.AutoSize = true;
+            this.chkBlueHard.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkBlueHard.Location = new System.Drawing.Point(39, 194);
+            this.chkBlueHard.Name = "chkBlueHard";
+            this.chkBlueHard.Size = new System.Drawing.Size(102, 21);
+            this.chkBlueHard.TabIndex = 21;
+            this.chkBlueHard.Text = "Hard Mode";
+            this.chkBlueHard.UseVisualStyleBackColor = true;
+            // 
             // radioButton1
             // 
             this.radioButton1.AutoSize = true;
@@ -194,6 +206,17 @@
             this.redPlayer.Size = new System.Drawing.Size(177, 221);
             this.redPlayer.TabIndex = 8;
             this.redPlayer.TabStop = false;
+            // 
+            // chkRedHard
+            // 
+            this.chkRedHard.AutoSize = true;
+            this.chkRedHard.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.chkRedHard.Location = new System.Drawing.Point(34, 194);
+            this.chkRedHard.Name = "chkRedHard";
+            this.chkRedHard.Size = new System.Drawing.Size(102, 21);
+            this.chkRedHard.TabIndex = 22;
+            this.chkRedHard.Text = "Hard Mode";
+            this.chkRedHard.UseVisualStyleBackColor = true;
             // 
             // radioButton2
             // 
@@ -387,27 +410,16 @@
             this.btnReplay.UseVisualStyleBackColor = true;
             this.btnReplay.Click += new System.EventHandler(this.btnReplay_Click);
             // 
-            // chkBlueHard
+            // btnTheme
             // 
-            this.chkBlueHard.AutoSize = true;
-            this.chkBlueHard.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkBlueHard.Location = new System.Drawing.Point(39, 194);
-            this.chkBlueHard.Name = "chkBlueHard";
-            this.chkBlueHard.Size = new System.Drawing.Size(102, 21);
-            this.chkBlueHard.TabIndex = 21;
-            this.chkBlueHard.Text = "Hard Mode";
-            this.chkBlueHard.UseVisualStyleBackColor = true;
-            // 
-            // chkRedHard
-            // 
-            this.chkRedHard.AutoSize = true;
-            this.chkRedHard.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Regular, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
-            this.chkRedHard.Location = new System.Drawing.Point(34, 194);
-            this.chkRedHard.Name = "chkRedHard";
-            this.chkRedHard.Size = new System.Drawing.Size(102, 21);
-            this.chkRedHard.TabIndex = 22;
-            this.chkRedHard.Text = "Hard Mode";
-            this.chkRedHard.UseVisualStyleBackColor = true;
+            this.btnTheme.Font = new System.Drawing.Font("Century Gothic", 7.8F, System.Drawing.FontStyle.Bold, System.Drawing.GraphicsUnit.Point, ((byte)(0)));
+            this.btnTheme.Location = new System.Drawing.Point(11, 90);
+            this.btnTheme.Name = "btnTheme";
+            this.btnTheme.Size = new System.Drawing.Size(104, 41);
+            this.btnTheme.TabIndex = 21;
+            this.btnTheme.Text = "Dark Mode";
+            this.btnTheme.UseVisualStyleBackColor = true;
+            this.btnTheme.Click += new System.EventHandler(this.btnTheme_Click);
             // 
             // Form1
             // 
@@ -415,6 +427,7 @@
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
             this.BackColor = System.Drawing.Color.FromArgb(((int)(((byte)(255)))), ((int)(((byte)(192)))), ((int)(((byte)(192)))));
             this.ClientSize = new System.Drawing.Size(1197, 594);
+            this.Controls.Add(this.btnTheme);
             this.Controls.Add(this.btnReplay);
             this.Controls.Add(this.chkRecord);
             this.Controls.Add(this.lblRedScore);
@@ -474,6 +487,7 @@
         private System.Windows.Forms.Button btnReplay;
         private System.Windows.Forms.CheckBox chkBlueHard;
         private System.Windows.Forms.CheckBox chkRedHard;
+        private System.Windows.Forms.Button btnTheme;
     }
 }
 

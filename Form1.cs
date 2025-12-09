@@ -16,6 +16,10 @@ namespace Sprint_3
         private BaseGame game;
         private Button[,] gridButtons;
 
+        private Color _originalFormColor;
+        private Color _originalTextColor;
+        private Color _originalButtonColor;
+
         private IPlayer _bluePlayer;
         private IPlayer _redPlayer;
         private Timer _computerTimer;
@@ -26,6 +30,10 @@ namespace Sprint_3
         public Form1()
         {
             InitializeComponent();
+
+            _originalFormColor = this.BackColor;
+            _originalTextColor = this.ForeColor;
+            _originalButtonColor = SystemColors.Control;
 
             pnlBoard.Enabled = false;
 
@@ -80,7 +88,7 @@ namespace Sprint_3
             {
                 game = new GeneralGame(boardSize);
             }
-            
+
             chkBlueHard.Enabled = false;
             chkRedHard.Enabled = false;
 
@@ -143,6 +151,11 @@ namespace Sprint_3
             gridButtons = new Button[size, size]; //sets the buttons on the grid
             int buttonSize = pnlBoard.Width / size; //sets the size for the buttons
 
+            float fontSize = buttonSize * 0.5F;
+            if (fontSize < 8) fontSize = 8;
+
+            Font dynamicFont = new Font("Century Gothic", fontSize, FontStyle.Bold);
+
             for (int row = 0; row < size; row++)
             {
                 for (int col = 0; col < size; col++)
@@ -154,7 +167,8 @@ namespace Sprint_3
                         Height = buttonSize,
                         Left = col * buttonSize,
                         Top = row * buttonSize,
-                        Tag = new Point(row, col)
+                        Tag = new Point(row, col),
+                        Font = dynamicFont
                     };
 
                     button.Click += GridButton_Click;
@@ -162,6 +176,8 @@ namespace Sprint_3
                     gridButtons[row, col] = button;
                 }
             }
+
+            ApplyTheme();
         }
 
         private void GridButton_Click(object sender, EventArgs e)
@@ -180,6 +196,11 @@ namespace Sprint_3
             }
 
             Point position = (Point)clickedButton.Tag;
+
+            if (game.GameBoard[position.X, position.Y] != Cell.Empty)
+            {
+                return;
+            }
 
             Cell move;
 
@@ -278,7 +299,7 @@ namespace Sprint_3
                     if (cellState != Cell.Empty)
                     {
                         gridButtons[r, c].Text = cellState.ToString();
-                        gridButtons[r, c].Enabled = false;
+                        
                     }
                 }
             }
@@ -435,5 +456,101 @@ namespace Sprint_3
 
             _replayIndex++;
         }
+
+        private bool _isDarkMode = false;
+
+        private void btnTheme_Click(object sender, EventArgs e)
+        {
+            _isDarkMode = !_isDarkMode;
+            ApplyTheme();
+        }
+
+        private void ApplyTheme()
+        {
+            Color targetBackColor;
+            Color targetForeColor;
+
+            if (_isDarkMode)
+            {
+                targetBackColor = Color.Black;
+                targetForeColor = Color.White;
+
+                this.BackColor = Color.Black;
+                this.ForeColor = Color.White;
+                pnlBoard.BackColor = Color.Black;
+
+                btnTheme.Text = "Light Mode";
+            }
+            else
+            {
+                targetBackColor = _originalFormColor;
+                targetForeColor = _originalTextColor;
+
+                this.BackColor = _originalFormColor;
+                this.ForeColor = _originalTextColor;
+                pnlBoard.BackColor = _originalFormColor;
+
+                btnTheme.Text = "Dark Mode";
+            }
+
+            foreach (Control c in this.Controls)
+            {
+                if (c == pnlBoard) continue;
+
+                if (c is Label || c is RadioButton || c is CheckBox || c is TextBox || c is GroupBox)
+                {
+                    c.BackColor = targetBackColor;
+                    c.ForeColor = targetForeColor;
+                }
+
+                if (c is Button)
+                {
+                    if (_isDarkMode)
+                    {
+                        c.BackColor = Color.White;
+                        c.ForeColor = Color.Black;
+                        ((Button)c).FlatStyle = FlatStyle.Flat;
+                    }
+                    else
+                    {
+                        c.BackColor = Color.White;
+                        c.ForeColor = _originalTextColor;
+                        ((Button)c).FlatStyle = FlatStyle.Standard;
+                    }
+                }
+
+                if (c is NumericUpDown)
+                {
+                    c.BackColor = targetBackColor;
+                    c.ForeColor = targetForeColor;
+                }
+            }
+
+            if (gridButtons != null)
+            {
+                foreach (Button btn in gridButtons)
+                {
+                    if (btn != null)
+                    {
+                        if (_isDarkMode)
+                        {
+                            btn.BackColor = Color.Black;
+                            btn.ForeColor = Color.White;
+                            btn.FlatStyle = FlatStyle.Flat;
+                            btn.FlatAppearance.BorderColor = Color.White;
+                            btn.FlatAppearance.BorderSize = 1;
+                        }
+                        else
+                        {
+                            btn.BackColor = Color.White;
+                            btn.ForeColor = _originalTextColor;
+                            btn.FlatStyle = FlatStyle.Standard;
+                            btn.UseVisualStyleBackColor = true;
+                        }
+                    }
+                }
+            }
+        }
     }
 }
+
