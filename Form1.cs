@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Forms;
 using System.IO;
+using System.Media;
 
 namespace Sprint_3
 {
@@ -137,6 +138,9 @@ namespace Sprint_3
 
             currentPlayer.MakeMove(game);
 
+            if (game.State == GameState.InProgress) PlayMoveSound();
+            else PlayWinSound();
+
             UpdateBoardFromGame();
             UpdateScores();
             UpdateTurnLabel();
@@ -213,6 +217,10 @@ namespace Sprint_3
                 move = redSButton.Checked ? Cell.S : Cell.O; //if not, put it for the red player
             }
             game.MakeMove(position.X, position.Y, move);
+
+            if (game.State == GameState.InProgress) PlayMoveSound();
+            else PlayWinSound();
+
             UpdateBoardFromGame();
             UpdateScores();
             CheckForGameOver();
@@ -450,6 +458,8 @@ namespace Sprint_3
 
             game.MakeMove(m.Row, m.Column, m.MoveType);
 
+            PlayMoveSound();
+
             UpdateBoardFromGame();
             UpdateScores();
             UpdateTurnLabel();
@@ -550,6 +560,40 @@ namespace Sprint_3
                     }
                 }
             }
+        }
+
+        private void PlayMoveSound()
+        {
+            try
+            {
+                string path = @"C:\Windows\Media\Windows Balloon.wav";
+                if (File.Exists(path))
+                {
+                    new System.Media.SoundPlayer(path).Play();
+                }
+                else
+                {
+                    System.Media.SystemSounds.Beep.Play();
+                }
+            }
+            catch { }
+        }
+
+        private void PlayWinSound()
+        {
+            try
+            {
+                string path = @"C:\Windows\Media\tada.wav";
+                if (File.Exists(path))
+                {
+                    new System.Media.SoundPlayer(path).Play();
+                }
+                else
+                {
+                    System.Media.SystemSounds.Exclamation.Play();
+                }
+            }
+            catch { }
         }
     }
 }
