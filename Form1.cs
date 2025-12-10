@@ -221,6 +221,8 @@ namespace Sprint_3
             if (game.State == GameState.InProgress) PlayMoveSound();
             else PlayWinSound();
 
+            TigerDataService.IngestMove(position.X, position.Y, move, game.CurrentTurn, game.BoardSize);
+
             UpdateBoardFromGame();
             UpdateScores();
             CheckForGameOver();
@@ -358,6 +360,16 @@ namespace Sprint_3
                         MessageBox.Show("Error saving recording: " + ex.Message);
                     }
                 }
+
+                string winner = "Draw";
+                if (game.State == GameState.BlueWin) winner = "Blue";
+                else if (game.State == GameState.RedWin) winner = "Red";
+
+                TigerDataService.IngestGameResult(winner, 0);
+
+                string cloudStatus = TigerDataService.UploadToTigerCloud();
+                string tigerStats = TigerDataService.GetTimeSeriesAnalytics();
+
                 if (game.State == GameState.Draw)
                 {
                     message = "The game is a draw!";
@@ -371,7 +383,7 @@ namespace Sprint_3
                     message = "Red player wins!";
                 }
 
-                MessageBox.Show(message, "Game Over!");
+                MessageBox.Show(message + "\n\n" + tigerStats + "\n" + cloudStatus, "Game Over!");
             }
         }
 
